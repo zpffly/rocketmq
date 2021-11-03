@@ -13,3 +13,11 @@ devenv
 .DS_Store
 localbin
 nohup.out
+store/commitlog
+store/consumequeue
+store/index
+store/abort
+store/checkpoint
+store/config
+store/lock
+conf

@@ -88,6 +88,7 @@ public class NamesrvController {
 
             @Override
             public void run() {
+                // 移除失活broker
                 NamesrvController.this.routeInfoManager.scanNotActiveBroker();
             }
         }, 5, 10, TimeUnit.SECONDS);
@@ -96,6 +97,7 @@ public class NamesrvController {
 
             @Override
             public void run() {
+                // 打印kv配置
                 NamesrvController.this.kvConfigManager.printAllPeriodically();
             }
         }, 1, 10, TimeUnit.MINUTES);

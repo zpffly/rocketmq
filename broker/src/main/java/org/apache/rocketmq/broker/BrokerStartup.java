@@ -22,6 +22,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.rocketmq.common.BrokerConfig;
 import org.apache.rocketmq.common.MQVersion;
 import org.apache.rocketmq.common.MixAll;
@@ -56,6 +57,28 @@ public class BrokerStartup {
 
     public static void main(String[] args) {
         start(createBrokerController(args));
+//        try {
+//            myMain();
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    public static void myMain() throws Exception {
+        System.setProperty(RemotingCommand.REMOTING_VERSION_KEY, Integer.toString(MQVersion.CURRENT_VERSION));
+        final BrokerConfig brokerConfig = new BrokerConfig();
+        brokerConfig.setBrokerName("broker-a");
+        brokerConfig.setNamesrvAddr("127.0.0.1:9876");
+
+        BrokerController brokerController = new BrokerController(
+                brokerConfig,
+                new NettyServerConfig(),
+                new NettyClientConfig(),
+                new MessageStoreConfig());
+        brokerController.initialize();
+        brokerController.start();
+        // 不让主方法结束
+        Thread.sleep(DateUtils.MILLIS_PER_DAY);
     }
 
     public static BrokerController start(BrokerController controller) {
